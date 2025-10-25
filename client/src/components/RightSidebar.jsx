@@ -1,8 +1,8 @@
 import React from 'react'
-
+import Sidebar from './Sidebar'
 const RightSidebar = () => {
   return (
-    <div>RightSidebar</div>
+    <div className='text-white text-2xl text-center'>{}</div>
   )
 }
 

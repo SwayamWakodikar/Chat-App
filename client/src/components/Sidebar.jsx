@@ -36,9 +36,9 @@ const Sidebar = ({selectedUser,setSelectedUser}) => {
                 index<3?<span className='text-green-400 text-xs'>Online</span>:<span className='text-red-500 text-xs'>Offline</span>
               }
             </div>
-            {
+            {/* {
               index>2&& <p className='absolute top-4 right-4 text-xs h-5 w-5 flex justify-center rounded-full bg-violet-500/50'>{index}</p>
-            }
+            } */}
           </div>
         ))}
       </div>
