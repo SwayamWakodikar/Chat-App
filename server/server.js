@@ -1,9 +1,9 @@
-const app=require("express");
-const http=require("http");
-const cors=require("cors");
-const {Server}=require("socket.io");
-const io=new Server(Server);
-io.on('connection',socker=>{
-    
+import express from 'express';
+import axios from 'axios';
+import cors from 'cors';
+
+app.use(cors);
+
+app.get('/',(req,res)=>{
+    console.log("Backend is running ");
 })
-app.use(express)
