@@ -6,7 +6,7 @@ import User from './src/models/userModel.js'
 import connectDB from './src/config/db.js';
 
 connectDB()
-const port=3000;
+const port=5000;
 const app=express();
 // app.use(cors);
 
