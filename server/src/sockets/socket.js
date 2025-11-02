@@ -1,8 +1,16 @@
+// The Server import at the top causes confusion; remove the parameter 'Server' from the function (should not take it).
+// Also, 'method' in cors should be 'methods' (plural) as per socket.io docs.
+
+// import { Server } from "socket.io";
+// import Msg from '../models/messageModel.js';
+
+
+
 import { Server } from "socket.io";
 // import { createServer, Server } from "http";
 import Msg from '../models/messageModel.js';
 // const server=createServer();
-export default function setupSocketServer(Server) {
+export default function setupSocketServer() {
 const io=new Server(9000,{
     cors:{
         origin:"http://localhost:5173/",

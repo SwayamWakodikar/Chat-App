@@ -9,12 +9,13 @@ import setupSocketServer from './src/sockets/socket.js';
 connectDB()
 const port=5000;
 const app=express();
-// app.use(cors);
+app.use(cors());
 
 app.get('/',(req,res)=>{
     console.log("Backend is running ");
+    res.send(`Backend is running on port ${port}`)
 })
 setupSocketServer();
 app.listen(port,()=>{
-    console.log("chal raha hai");
+    console.log(`chal raha hai on ${port}`);
 })
