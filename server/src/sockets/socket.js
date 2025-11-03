@@ -8,14 +8,13 @@
 
 
 import { Server } from "socket.io";
-// import { createServer, Server } from "http";
 import mongoose from 'mongoose';
 import Msg from '../models/messageModel.js';
-// const server=createServer();
-export default function setupSocketServer() {
+
+export default function setupSocketServer(httpServer) {
 const io=new Server(9000,{
     cors:{
-        origin:"http://localhost:5173/",
+        origin:"http://localhost:5173",
         methods: ["GET","POST"],
     },
 });

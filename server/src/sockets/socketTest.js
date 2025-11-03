@@ -5,7 +5,7 @@ const socket = io("http://localhost:9000", {
 });
 
 socket.on("connect", () => {
-  console.log("✅ Connected to socket server:", socket.id);
+  console.log("Connected to socket server:", socket.id);
 
   socket.emit("join", "user123");
 
@@ -18,9 +18,9 @@ socket.on("connect", () => {
 });
 
 socket.on("newMessage", (msg) => {
-  console.log("💬 New message received:", msg);
+  console.log("New message received:", msg);
 });
 
 socket.on("disconnect", () => {
-  console.log("❌ Disconnected");
+  console.log(" Disconnected");
 });
