@@ -7,14 +7,7 @@ import Profilepage from './pages/Profilepage';
 function App() {
 
   return (
-    <div className="bg-[url('./src/assets/bgImage.svg')] bg-contain">
-      <Routes>
-        <Route path='/' element={<Homepage/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/profile' element={<Profilepage/>}/>
-
-      </Routes>
-    </div>
+    <div className="bg-contain"></div>
   );
 }
 export default App
