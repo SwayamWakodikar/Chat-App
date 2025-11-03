@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
-import Homepage from './pages/Homepage';
-import LoginPage from './pages/LoginPage';
-import Profilepage from './pages/Profilepage';
-
+import Homepage from './pages/Homepage.jsx';
 function App() {
 
   return (
-    <div className="bg-contain"></div>
+    <Routes>
+      <Route path='/' element={<Homepage/>}/>
+    </Routes>
+    
+
   );
 }
 export default App
