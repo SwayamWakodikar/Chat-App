@@ -1,5 +1,5 @@
 import React from "react";
-import {Server, Socket} from "socket.io";
+// import {Server, Socket} from "socket.io";
 import {io} from "socket.io-client";
 const Chatcontainer = () => {
 const socket = io("http://localhost:9000", {
