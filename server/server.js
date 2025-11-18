@@ -7,7 +7,7 @@ import connectDB from './src/config/db.js';
 import setupSocketServer from './src/sockets/socket.js';
 
 connectDB()
-const port=5000;
+const port=process.env.PORT||5000;
 const app=express();
 app.use(cors());
 
