@@ -12,12 +12,13 @@ import mongoose from 'mongoose';
 import Msg from '../models/messageModel.js';
 
 export default function setupSocketServer(httpServer) {
-const io=new Server(9000,{
-    cors:{
-        origin:"http://localhost:5173",
-        methods: ["GET","POST"],
-    },
-});
+    const io = new Server(httpServer, {
+        cors: {
+            origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+            methods: ["GET", "POST"],
+        },
+    });
+
 io.on("connection",(socket)=>{
     console.log("a user connected",socket.id);
     socket.on("join",(userId)=>{

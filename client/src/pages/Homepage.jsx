@@ -30,7 +30,7 @@ const Homepage = () => {
 
   useEffect(() => {
     if (currentUser) {
-      socket.current = io(host === "http://localhost:5000" ? "http://localhost:9000" : "http://localhost:9000"); // Using port 9000 for socket
+      socket.current = io(host); // Connects to the same host/port as API (localhost:5000)
       socket.current.emit("join", currentUser._id);
     }
   }, [currentUser]);
