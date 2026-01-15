@@ -25,17 +25,23 @@ io.on("connection",(socket)=>{
         console.log(`User${userId} joined the room`);
     });
     
-    socket.on("send_message",async (data)=>{
-        const{sender,receiver,content}=data;
-        try{
-            const newMsg=new Msg({sender,receiver,content});
-            await newMsg.save();
-            io.to(receiver).emit('newMessage',newMsg)
+    socket.on("send_message", (data) => {
+        const { sender, receiver, content } = data;
+        try {
+            // Message is already saved via API call in the client.
+            // Just broadcast it to the receiver.
+            // We construct a temporary message object to emit immediately.
+            const msgData = {
+                sender,
+                receiver,
+                content,
+                createdAt: new Date().toISOString()
+            };
+            io.to(receiver).emit('newMessage', msgData);
         }
         catch(err){
-            console.log("Message not sent");
-            console.error("Error details:",err);
-            console.log("Received data:",data);
+            console.log("Message sending execution failed");
+            console.error(err);
         }
     });
     socket.on("disconnect",()=>{

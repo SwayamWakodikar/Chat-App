@@ -1,31 +1,80 @@
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { allUsersRoute, logoutRoute } from "../utils/APIRoutes";
 
-import { useNavigate } from 'react-router-dom'
-import React from 'react'
+const Sidebar = ({ currentUser, changeChat }) => {
+  const navigate = useNavigate();
+  const [contacts, setContacts] = useState([]);
+  const [currentSelected, setCurrentSelected] = useState(undefined);
 
-const Sidebar = () => {
+  useEffect(() => {
+    async function fetchData() {
+      if (currentUser) {
+        try {
+          const data = await fetch(`${allUsersRoute}/${currentUser._id}`);
+          const users = await data.json();
+          setContacts(users);
+        } catch (error) {
+          console.error("Error fetching contacts:", error);
+        }
+      }
+    }
+    fetchData();
+  }, [currentUser]);
+
+  const changeCurrentChat = (index, contact) => {
+    setCurrentSelected(index);
+    changeChat(contact);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("chat-app-user");
+    navigate("/login");
+  }
+
   return (
-    <div>
-        <div className='flex justify-center text-5xl text-bold'>
-        ChatApp
-    </div>
-    <div className="flex justify-center mt-4">
-      <div className="relative w-4/5">
-        <input
-          type="text"
-          placeholder="Search or start a chat…"
-          className="w-full py-3 pl-12 pr-4 rounded-3xl bg-gradient-to-r from-amber-100 to-amber-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-500 transition-all duration-200"
-        />
-        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-500 text-lg pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z" />
-          </svg>
-        </span>
+    <div className="flex flex-col h-full overflow-hidden bg-[#0a0a16] text-white">
+      <div className="flex justify-center items-center h-[10%] gap-4 pt-4">
+        <h3 className="text-xl font-bold uppercase text-white tracking-widest">ChatApp</h3>
+      </div>
+      <div className="flex flex-col items-center gap-3 overflow-auto h-[80%] pt-4 w-full">
+        {contacts.map((contact, index) => {
+          return (
+            <div
+              key={contact._id}
+              className={`flex items-center gap-4 cursor-pointer w-[90%] rounded-lg p-2 transition-all duration-300 ease-in-out ${index === currentSelected ? "bg-[#9186f3]" : "bg-[#ffffff34]"
+                }`}
+              onClick={() => changeCurrentChat(index, contact)}
+            >
+              <div className="h-10 w-10">
+                <div className="h-full w-full rounded-full bg-purple-500 flex items-center justify-center text-lg font-bold">
+                  {contact.avatarImage ? (
+                    <img src={contact.avatarImage} alt="" className="h-full w-full rounded-full object-cover" />
+                  ) : (
+                    contact.name[0].toUpperCase()
+                  )}
+                </div>
+              </div>
+              <div className="username">
+                <h3 className="text-white text-lg">{contact.name}</h3>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex justify-center items-center h-[10%] bg-[#0d0d30]">
+        <div className="flex items-center gap-4 px-4">
+          <div className="h-10 w-10 rounded-full bg-yellow-500 flex items-center justify-center font-bold">
+            {currentUser && currentUser.name && currentUser.name[0].toUpperCase()}
+          </div>
+          <div className="username">
+            <h2 className="text-white text-lg">{currentUser && currentUser.name}</h2>
+          </div>
+          <button onClick={handleLogout} className="bg-red-500 p-2 rounded-md ml-4 text-xs">Logout</button>
+        </div>
       </div>
     </div>
-    </div>
-    
-    
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
