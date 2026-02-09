@@ -1,4 +1,4 @@
-export const host = "https://chat-app-1-wq6d.onrender.com";
+export const host = "http://localhost:5000";
 export const loginRoute = `${host}/api/auth/login`;
 export const quickLoginRoute = `${host}/api/auth/quicklogin`;
 export const registerRoute = `${host}/api/auth/register`;

@@ -1,23 +1,23 @@
-import Msg from "../models/messageModel.js";
+// In-memory storage for messages
+const messages = [];
 
 export const getMessages = async (req, res, next) => {
   try {
     const { from, to } = req.body;
 
-    const messages = await Msg.find({
-      $or: [
-        { sender: from, receiver: to },
-        { sender: to, receiver: from }, // Check both directions
-      ],
-    }).sort({ updatedAt: 1 });
+    const projectMessages = messages
+      .filter(msg => 
+        (msg.sender === from && msg.receiver === to) || 
+        (msg.sender === to && msg.receiver === from)
+      )
+      .map(msg => {
+        return {
+          fromSelf: msg.sender === from,
+          message: msg.content,
+        };
+      });
 
-    const projectedMessages = messages.map((msg) => {
-      return {
-        fromSelf: msg.sender.toString() === from,
-        message: msg.content,
-      };
-    });
-    res.json(projectedMessages);
+    res.json(projectMessages);
   } catch (ex) {
     next(ex);
   }
@@ -26,14 +26,14 @@ export const getMessages = async (req, res, next) => {
 export const addMessage = async (req, res, next) => {
   try {
     const { from, to, message } = req.body;
-    const data = await Msg.create({
+    messages.push({
       content: message,
       sender: from,
       receiver: to,
+      updatedAt: new Date()
     });
 
-    if (data) return res.json({ msg: "Message added successfully." });
-    else return res.json({ msg: "Failed to add message to database" });
+    return res.json({ msg: "Message added successfully." });
   } catch (ex) {
     next(ex);
   }
